@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <title>Android string resource generator</title>
+  <title>Android String resource generator</title>
   <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
   <link rel="stylesheet" href="style.css" />
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css' />
@@ -63,7 +63,7 @@
 					output += '<string-array name=\"' + arrayName + '\">\n'
 
 					for(var i = 0; i < strings.length; i++) {
-						var stringName = strings[i].toLowerCase().replace(" ", "_");
+						var stringName = strings[i].toLowerCase().split(' ').slice(0, 3).join('_');
 						var string = '<item name=\"' + stringName + '\">' + strings[i] + '</item>';
 						output += string + '\n';
 					}
@@ -71,7 +71,7 @@
 					output += '</string-array>'
 				} else {
 					for(var i = 0; i < strings.length; i++) {
-						var stringName = strings[i].toLowerCase().replace(" ", "_");
+						var stringName = strings[i].toLowerCase().split(' ').slice(0, 3).join('_');
 						var string = '<string name=\"' + stringName + '\">' + strings[i] + '</string>';
 						output += string + '\n';
 					}
