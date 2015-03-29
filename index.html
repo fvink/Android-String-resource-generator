@@ -63,16 +63,16 @@
 					output += '<string-array name=\"' + arrayName + '\">\n'
 
 					for(var i = 0; i < strings.length; i++) {
-						var stringName = strings[i].toLowerCase().split(' ').slice(0, 3).join('_');
-						var string = '<item name=\"' + stringName + '\">' + strings[i] + '</item>';
+						var stringName = strings[i].toLowerCase().split(' ').slice(0, 3).join('_').replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+						var string = '<item name=\"' + stringName + '\">' + strings[i].replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\?/g, '\\?') + '</item>';
 						output += string + '\n';
 					}
 
 					output += '</string-array>'
 				} else {
 					for(var i = 0; i < strings.length; i++) {
-						var stringName = strings[i].toLowerCase().split(' ').slice(0, 3).join('_');
-						var string = '<string name=\"' + stringName + '\">' + strings[i] + '</string>';
+						var stringName = strings[i].toLowerCase().split(' ').slice(0, 3).join('_').replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+						var string = '<string name=\"' + stringName + '\">' + strings[i].replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\?/g, '\\?') + '</string>';
 						output += string + '\n';
 					}
 				}	
