@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+  <title>Android string resource generator</title>
+  <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css' />
+</head>
+<body>
+	<div id="container">
+		<div id="text">
+			<h1>Android String resource generator</h1>
+			<p>Use this to wrap your strings to &lt;string&gt; elements or a &lt;string-array&gt;.</p>
+			<p>Enter each string on a new line.</p>
+			<label id="checkLabel" for="isStringArray">Create string array</label>
+			<input id="isStringArray" type="checkbox"/>
+			<br/>
+			<label for="arrayName">Array name:</label>
+			<input id="arrayName" type="text" />
+		</div>
+		<br/>	
+		<br/>
+		<div class="textarea">
+			<label>Input</label>
+			<textarea id="input"></textarea>
+		</div>
+		<div class="textarea">
+			<label>Output</label>
+			<textarea id="output"></textarea>
+		</div>
+		
+	</div>
+
+	<script type="text/javascript">
+		$('#input').on('input propertychange paste', function() {
+		    generateResources();
+		});
+
+		$('#arrayName').on('input propertychange paste', function() {
+		    generateResources();
+		})
+
+		$("#isStringArray").click(function() {
+			generateResources();
+		});
+
+
+		//TODO escape apostrophes and quotation marks
+		function generateResources() {
+			if($.trim($('#input').val()).length != 0) {
+				var inputLines = $.trim($('#input').val()).split(/\n/);
+				var strings = [];
+				for (var i = 0; i < inputLines.length; i++) {
+				  // only push this line if it contains a non whitespace character.
+				  if (/\S/.test(inputLines[i])) {
+				  	strings.push($.trim(inputLines[i]));
+				  }
+				}
+
+				var output = '';
+
+				if($('#isStringArray').is(':checked')) {
+					var arrayName = $.trim($('#arrayName').val());
+					output += '<string-array name=\"' + arrayName + '\">\n'
+
+					for(var i = 0; i < strings.length; i++) {
+						var stringName = strings[i].toLowerCase().replace(" ", "_");
+						var string = '<item name=\"' + stringName + '\">' + strings[i] + '</item>';
+						output += string + '\n';
+					}
+
+					output += '</string-array>'
+				} else {
+					for(var i = 0; i < strings.length; i++) {
+						var stringName = strings[i].toLowerCase().replace(" ", "_");
+						var string = '<string name=\"' + stringName + '\">' + strings[i] + '</string>';
+						output += string + '\n';
+					}
+				}	
+
+				$('#output').val(output);
+			} else {
+				$('#output').val('');
+			}
+		}
+	</script>
+</body>
+</html>
