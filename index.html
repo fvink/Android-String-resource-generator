@@ -64,7 +64,7 @@
 
 					for(var i = 0; i < strings.length; i++) {
 						var stringName = strings[i].toLowerCase().split(' ').slice(0, 3).join('_').replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
-						var string = '<item name=\"' + stringName + '\">' + strings[i].replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\?/g, '\\?') + '</item>';
+						var string = '<item name=\"' + stringName + '\">' + capitalizeFirstLetter(strings[i].replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\?/g, '\\?')) + '</item>';
 						output += string + '\n';
 					}
 
@@ -72,7 +72,7 @@
 				} else {
 					for(var i = 0; i < strings.length; i++) {
 						var stringName = strings[i].toLowerCase().split(' ').slice(0, 3).join('_').replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
-						var string = '<string name=\"' + stringName + '\">' + strings[i].replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\?/g, '\\?') + '</string>';
+						var string = '<string name=\"' + stringName + '\">' + capitalizeFirstLetter(strings[i].replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\?/g, '\\?')) + '</string>';
 						output += string + '\n';
 					}
 				}	
@@ -81,6 +81,10 @@
 			} else {
 				$('#output').val('');
 			}
+		}
+		
+		function capitalizeFirstLetter(string) {
+		    return string.charAt(0).toUpperCase() + string.slice(1);
 		}
 	</script>
 </body>
